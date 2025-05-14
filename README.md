@@ -141,7 +141,6 @@ server {
 ## Security Group Rules
 
 * Inbound rule: TCP 80 from 0.0.0.0/0
-* Optional: TCP 443 if using HTTPS
 
 ---
 
