@@ -1,0 +1,20 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* ✅ Override Bootstrap Navbar Color */
+.navbar.bg-primary {
+    background-color: blue !important;  /* ✅ Force red background */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white!important;  /* ✅ Change text color */
+}
+
+/* ✅ Update Footer & Header */
+.header, .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: blue !important;
+    text-align: center;
+    color: white  !important;
+}

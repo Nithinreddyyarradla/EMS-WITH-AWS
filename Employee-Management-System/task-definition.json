@@ -1,0 +1,62 @@
+{
+  "family": "employee-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::975050192182:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "frontend",
+      "image": "975050192182.dkr.ecr.us-east-2.amazonaws.com/employee-frontend",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/employee-service",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "frontend"
+        }
+      }
+    },
+    {
+      "name": "backend",
+      "image": "975050192182.dkr.ecr.us-east-2.amazonaws.com/employee-backend",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:mysql://springboot-angular.cn8qwim2utiz.us-east-2.rds.amazonaws.com:3306/springboot-angular"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "root"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "Nithin1234"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/employee-service",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "backend"
+        }
+      }
+    }
+  ]
+}

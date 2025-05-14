@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employee_db
+    ports:
+      - "3306:3306"
+    networks:
+      - ems-net
+
+  backend:
+    image: employee-management-system-backend
+    container_name: ems-backend
+    restart: on-failure
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/employee_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    networks:
+      - ems-net
+
+  frontend:
+    image: employee-management-system-frontend
+    container_name: ems-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - ems-net
+
+networks:
+  ems-net:
